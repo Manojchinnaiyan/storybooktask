@@ -15,7 +15,7 @@ const Task = ({task:{id,title,state},onArchive,onPinned}) => {
                 <span className="checkbox-custom" onClick={()=> onArchive(id)}  />
             </label>
             <div className="title">
-                <input type="text" value={ title } readOnly={ true } placeholder="Input title" style={{ background: 'red' }}></input>
+                <input type="text" value={ title } readOnly={ true } placeholder="Input title"></input>
             </div>
             <div className="actions" onClick={ event => event.stopPropagation() }>
                 { state !== "TASK_ARCHIVED" && (
