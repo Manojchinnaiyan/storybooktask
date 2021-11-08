@@ -1,14 +1,14 @@
 import React from "react"
-import TaskList from "./TaskList"
-import * as TaskStories from './Task.stories'
+import {PureTaskList} from "./TaskList"
+import * as TaskStories from './Task.stories' 
 
 export default {
     title: "TaskList/Tasks",
-    component: TaskList
-    
+    component: PureTaskList,
+   
 }
 
-const Template = ( args ) => <TaskList { ...args } />
+const Template = ( args ) => <PureTaskList { ...args } />
 
 export const Default = Template.bind( {} )
 Default.args = {

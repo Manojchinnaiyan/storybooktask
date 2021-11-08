@@ -1,8 +1,11 @@
 import React from 'react'
 import Task from './Task'
-import PropTypes, { arrayOf } from 'prop-types'
+import PropTypes from 'prop-types'
+import { archiveTask, pinnedTask } from '../lib/redux'
+import { connect } from "react-redux"
 
-const TaskList = ( { loading, tasks, onArchive, onPinned } ) =>
+
+export function PureTaskList( { loading, tasks, onArchive, onPinned } )
 {
     const events = { onArchive, onPinned }
 
@@ -15,6 +18,7 @@ const TaskList = ( { loading, tasks, onArchive, onPinned } ) =>
         </div>
     )
 
+    
     if ( loading )
     {
         return <div className="list-items">
@@ -55,20 +59,35 @@ const TaskList = ( { loading, tasks, onArchive, onPinned } ) =>
     )
 }
 
-export default TaskList
 
 
-TaskList.propTypes = {
+
+PureTaskList.propTypes = {
     loading: PropTypes.bool,
     tasks: PropTypes.arrayOf( Task.propTypes.task ).isRequired,
-    onArchive: PropTypes.func,
-    onPinned: PropTypes.func,
+    onArchive: PropTypes.func.isRequired,
+    onPinned: PropTypes.func.isRequired
 };
-TaskList.defaultProps = {
+
+PureTaskList.defaultProps = {
     loading: false,
 }
 
 
+export default connect(
+  ({ tasks }) => ({
+    tasks: tasks.filter(t => t.state === 'TASK_INBOX' || t.state === 'TASK_PINNED'),
+  }),
+  dispatch => ({
+    onArchive: id => dispatch(archiveTask(id)),
+    onPinned: id => dispatch(pinnedTask(id)),
+  })
+)( PureTaskList );
 
 
 
+
+
+
+
+ 
